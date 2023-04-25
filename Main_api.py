@@ -1,31 +1,19 @@
 import requests
 import json
 
-response = requests.get("https://randomuser.me/api/")
+class User:
+    def __init__ (self, first_name: dict) -> None: 
+        self.first_name = first_name
 
-class Information:
-    def __init__ (self, all_info : dict) -> None: 
-        self.all_info = all_info
+    def __str__ (self):
+        return self.first_name
 
-local_info_list : list[Information] #vår lokala info-lista
+user_list : list[User]
 
-class Specific_info(Information):
-    def __init__(self, all_info : dict, str_leaf : str):
-        super().__init__(all_info)
-        self.str_leaf = str_leaf
+def create_random_user():
+    response = requests.get("https://randomuser.me/api/")
+    results = json.loads(response.text)["results"][0]
+    first_name = results["name"]["first"]
+    return User(first_name)
 
-def move_info_from_web_to_local(key : str):
-    ##### FINISH THIS #########
-    # Använd "key" innuti response.text.data
-    # Add as informion to local list
-
-
-
-data = response.text #get data in json form
-parse_json = json.loads(data) #make it to python object
-print(type(parse_json)) #This is Dict = {}
-print(type(parse_json["results"])) #This is List = []
-print(type(parse_json["results"][0]))
-relevant_info = (parse_json["results"])[0] #find relevant info 
-#print(data)
-print((relevant_info["name"])["title"])
+print(create_random_user())
