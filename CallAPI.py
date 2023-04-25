@@ -1,4 +1,5 @@
 import requests
+import json
 response = requests.get("https://randomuser.me/api/")
 
 def newLines(number):
@@ -61,5 +62,34 @@ def quotes_only(s):
             quote = ""
     return quote_list
 
-#Test the 
-print(quotes_only(response.text))
+"""
+Class example
+"""
+class Something:
+    def __init__(self, s1:str, s2:str) -> None:
+        self.s1 = s1
+        self.s2 = s2
+    def __str__(self) -> str:
+        return "This something"
+"""
+Class Child example
+"""
+class Something_child(Something):
+    def __init__(self, s1:str, s2:str, child_variable) -> None:
+        super().__init__(s1,s2)
+        self.child_variable = child_variable
+
+s = Something("s1","s2")
+print(s)
+
+"""
+How to access information the easy way:
+"""
+data = response.text #get data in json form
+parse_json = json.loads(data) #make it to python object
+print(type(parse_json)) #This is Dict = {}
+print(type(parse_json["results"])) #This is List = []
+print(type(parse_json["results"][0]))
+relevant_info = (parse_json["results"])[0] #find relevant info 
+#print(data)
+print((relevant_info["name"])["title"])
